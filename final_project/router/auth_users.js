@@ -29,7 +29,7 @@ regd_users.post("/login", (req, res) => {
   const token = jwt.sign({ username }, "fingerprint_customer", { expiresIn: "1h" });
   req.session.authorization = { access_token: token };
 
-  return res.status(200).json({ message: "User logged in successfully" });
+  return res.status(200).json({message: "Login successful!"});
 });
 
 // Add a book review
@@ -44,7 +44,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
   // Store the review under the user's name
   books[isbn].reviews[username] = review;
-  return res.status(200).json({ message: "Review added successfully" });
+  return res.status(200).json({message: "Review successfully added!", reviews: books[isbn].reviews});
 });
 
 regd_users.delete("/auth/review/:isbn", (req, res) => {
@@ -56,7 +56,7 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
   }
 
   delete books[isbn].reviews[username];
-  return res.status(200).json({ message: "Review removed successfully" });
+  return res.status(200).json({message: `Review for ISBN ${isbn} deleted`});
 });
 
 module.exports.authenticated = regd_users;
