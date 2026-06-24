@@ -40,7 +40,7 @@ public_users.get('/isbn/:isbn', async function (req, res) {
 
 // Get book details based on author
 public_users.get('/author/:author', async function (req, res) {
-  const author = req.params.author;
+  const author = req.params.author; // Extract author from URL parameter
   try {
     const response = await axios.get(`http://localhost:5000/author/${author}`);
     if (!response.data || response.data.length === 0) {
@@ -48,6 +48,10 @@ public_users.get('/author/:author', async function (req, res) {
     }
     return res.status(200).json(response.data);
   } catch (error) {
+    console.error("Error fetching books by author:", error); // Log error details
+    return res.status(500).json({ message: "Error fetching books by author" });
+  }
+});
   
 // Get book review
 public_users.get('/review/:isbn', function (req, res) {
